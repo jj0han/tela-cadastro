@@ -3,6 +3,8 @@ var password = document.querySelector("#password");
 var emailError = document.querySelector("#email__incorrect");
 var passwordError = document.querySelector("#password__incorrect");
 var button = document.querySelector("button");
+var form = document.querySelector("form");
+var sucess = document.querySelector(".sucess");
 var user = {
     email: "",
     password: "",
@@ -37,7 +39,6 @@ button.addEventListener("click", function (e) {
     user.isLoggedIn = true;
     user.email = email.value;
     user.password = password.value;
+    form.style.display = "none";
+    sucess.style.display = "flex";
 });
-if (user.isLoggedIn) {
-    console.log("logado");
-}

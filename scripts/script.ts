@@ -3,6 +3,8 @@ var password = document.querySelector("#password") as HTMLInputElement
 var emailError = document.querySelector("#email__incorrect") as HTMLParagraphElement
 var passwordError = document.querySelector("#password__incorrect") as HTMLParagraphElement
 var button = document.querySelector("button") as HTMLButtonElement
+var form = document.querySelector("form") as HTMLFormElement
+var sucess = document.querySelector(".sucess") as HTMLElement
 
 interface User {
     email : (string | null);
@@ -46,8 +48,7 @@ button.addEventListener("click", (e) => {
     user.isLoggedIn = true
     user.email = email.value
     user.password = password.value
-})
 
-if(user.isLoggedIn) {
-    console.log("logado")
-}
+    form.style.display = "none"
+    sucess.style.display = "flex"
+})
