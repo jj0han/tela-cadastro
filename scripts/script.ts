@@ -1,10 +1,12 @@
-var email = document.querySelector("#email") as HTMLInputElement
-var password = document.querySelector("#password") as HTMLInputElement
-var emailError = document.querySelector("#email__incorrect") as HTMLParagraphElement
-var passwordError = document.querySelector("#password__incorrect") as HTMLParagraphElement
-var button = document.querySelector("button") as HTMLButtonElement
-var form = document.querySelector("form") as HTMLFormElement
-var sucess = document.querySelector(".sucess") as HTMLElement
+const email = document.querySelector<HTMLInputElement>("#email")!
+const password = document.querySelector<HTMLInputElement>("#password")!
+const emailError = document.querySelector<HTMLParagraphElement>("#email__incorrect")!
+const passwordError = document.querySelector<HTMLParagraphElement>("#password__incorrect")!
+const button = document.querySelector<HTMLButtonElement>("button")!
+const form = document.querySelector<HTMLFormElement>("form")!
+const sucess = document.querySelector<HTMLElement>(".sucess")!
+
+var pattern = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
 
 interface User {
     email : (string | null);
@@ -12,38 +14,39 @@ interface User {
     isLoggedIn : boolean
 }
 
-var user : User = {
+const user : User = {
     email: "",
     password: "",
     isLoggedIn: false
 }
 
-button.addEventListener("click", (e) => {
+form.addEventListener("submit", (e) => {
     e.preventDefault()
-    if(email.value === "" || email.value.indexOf("@") <= -1 || password.value === "") {
-        if(email.value === "" || email.value.indexOf("@") <= -1) {
-            if(email.value === "") {
-                emailError.textContent = "campo vazio!"
-            }
-
-            if(email.value.indexOf("@") <= -1) {
-                emailError.textContent = "email inválido!"
-
-            }
+    if(email.value === "" || !pattern.test(email.value) || password.value === "" || password.value.split("").length < 8 || password.value.split("").length >= 20) {
+        if(email.value === "") {
+            emailError.textContent = "campo vazio!"
+            email.focus()
+        } else if(!pattern.test(email.value)) {
+            email.focus()
+            emailError.textContent = "email inválido!"
         } else {
             emailError.textContent = ""
         }
 
         if(password.value === "") {
             passwordError.textContent = "campo vazio!"
+            password.focus()
+        } else if(password.value.split("").length < 8 || password.value.split("").length >= 20) {
+            password.focus()
+            passwordError.textContent = "digite uma senha de no mínimo 8 caracteres e no máximo 20!"
         } else {
-            passwordError.textContent = ""    
-        }
-        return
-        } else {
-            emailError.textContent = ""
             passwordError.textContent = "" 
         }
+        return
+    }  else {
+        emailError.textContent = ""
+        passwordError.textContent = "" 
+    }
 
     user.isLoggedIn = true
     user.email = email.value
